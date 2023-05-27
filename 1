@@ -1,0 +1,65 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+	<title>猜数字游戏</title>  
+	<style>  
+		canvas {  
+			border: 1px solid black;  
+		}  
+	</style>  
+</head>  
+<body>
+
+	<canvas id="gameCanvas" width="240" height="120"></canvas>
+
+	<script>  
+		// 获取 canvas 元素  
+		var canvas = document.getElementById("gameCanvas");  
+		var ctx = canvas.getContext("2d");
+
+		// 定义游戏变量  
+		var randomNumber = Math.floor(Math.random() * 100) + 1;  
+		var guess = 0;  
+		var guessCount = 0;
+
+		// 创建猜数字游戏循环  
+		function gameLoop() {  
+			// 获取用户的输入  
+			var guessStr = prompt("请输入你的猜测:");  
+			guess = parseInt(guessStr);
+
+			// 判断用户输入的数字是否与随机生成数字相同  
+			if (guess === randomNumber) {  
+				// 如果用户猜中了，则增加猜数字游戏次数并显示恭喜信息  
+				guessCount++;  
+				alert("恭喜你猜中了!");  
+			} else {  
+				// 如果用户猜错了，则提示用户并重新猜测  
+				alert("很遗憾，你猜错了。请再次猜测!");  
+				guessCount = 0;  
+				clearInterval(gameInterval);  
+			}
+
+			// 绘制游戏界面  
+			ctx.fillStyle = "#f2f2f2";  
+			ctx.fillRect(0, 0, canvas.width, canvas.height);  
+			ctx.font = "30px Arial";  
+			ctx.fillStyle = "black";  
+			ctx.fillText("猜数字游戏", 40, 40);  
+			ctx.fillStyle = "#ffffff";  
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+			// 更新游戏状态  
+			document.getElementById("guessCount").innerHTML = guessCount;  
+			document.getElementById("guess").innerHTML = guess;
+
+			// 进入新的游戏循环  
+			gameInterval = setInterval(gameLoop, 1000);  
+		}
+
+		// 启动游戏循环  
+		gameLoop();  
+	</script>
+
+</body>  
+</html>  
